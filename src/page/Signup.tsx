@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import { Signup, SignupRequest } from "../api/auth/AuthenticationAPI";
 import { Link } from "react-router-dom";
 import LoginImage from "../assets/LoginImage.jpg";
@@ -12,7 +12,7 @@ export function SignupPage() {
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
 
-  const signupHandler = async (e) => {
+  const signupHandler = async (e: FormEvent) => {
     e.preventDefault();
     const request: SignupRequest = {
       email: email,
