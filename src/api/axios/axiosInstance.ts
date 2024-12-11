@@ -3,6 +3,7 @@ import { BACKEND_API_URL } from "../../constant/AppConstant";
 import { refreshToken } from "../auth/AuthenticationAPI";
 import { CsrfTokenData } from "../common/CsrfAPI";
 import { getCookie } from "../../utils/CommonUtils";
+import { getFingerprint } from "../../hooks/useUserDeviceId";
 
 const axiosInstance = axios.create({
   baseURL: BACKEND_API_URL,
@@ -37,9 +38,10 @@ axiosInstance.interceptors.response.use(
     ) {
       originalRequest._retry = true;
       try {
+        const deviceId = await getFingerprint();
         const res = await refreshToken({
           refreshToken: localStorage.getItem("refreshToken") || "",
-          deviceId: "99886117",
+          deviceId: deviceId,
         });
         axios.defaults.headers.common[
           "Authorization"

@@ -28,7 +28,7 @@ export function LoginPage() {
     mutationFn: Login,
     onError: (error) => {
       if (error instanceof Error) {
-        alert("Signup failed! " + error.message);
+        alert("Login failed! " + error.message);
       }
     },
     onSuccess: () => {
