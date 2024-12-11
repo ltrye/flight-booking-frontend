@@ -5,7 +5,7 @@ import { axiosInstance } from "../axios/axiosInstance";
 export interface SignupRequest {
   email: string;
   phoneNumber: string;
-  firstName: string;
+  fullName: string;
   password: string;
   confirmPassword: string;
 }

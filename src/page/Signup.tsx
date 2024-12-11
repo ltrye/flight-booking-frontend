@@ -17,7 +17,7 @@ export function SignupPage() {
     const request: SignupRequest = {
       email: email,
       phoneNumber: phoneNumber,
-      firstName: fullName,
+      fullName: fullName,
       password: password,
       confirmPassword: passwordConfirmation,
     };

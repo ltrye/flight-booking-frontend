@@ -5,13 +5,14 @@ import { AuthenticatonContext } from "../context/AuthenticationContext";
 import { SimpleLoadingScreen } from "../component/SimpleLoading";
 
 export function ProfilePage() {
-  const { userDetails, isLoading } = useContext(AuthenticatonContext);
+  const { userDetails, isLoading, isAuthenticated } =
+    useContext(AuthenticatonContext);
 
   useEffect(() => {
-    if (isLoading === false && userDetails === null) {
+    if (!isLoading && !isAuthenticated) {
       document.location.href = "/login";
     }
-  }, [isLoading, userDetails]);
+  }, [isAuthenticated, isLoading, userDetails]);
 
   if (isLoading) {
     return <SimpleLoadingScreen />;
