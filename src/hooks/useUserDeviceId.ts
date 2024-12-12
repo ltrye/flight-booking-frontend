@@ -4,6 +4,11 @@ export function useUserDeviceId() {
   const [fpHash, setFpHash] = useState<string | null>(null);
 
   useEffect(() => {
+    async function getFingerprint() {
+      const fp = await FingerprintJS.load();
+      const result = await fp.get();
+      setFpHash(result.visitorId);
+    }
     getFingerprint();
   });
 

@@ -10,7 +10,7 @@ export function ProfilePage() {
 
   useEffect(() => {
     if (!isLoading && !isAuthenticated) {
-      document.location.href = "/login";
+      // document.location.href = "/login";
     }
   }, [isAuthenticated, isLoading, userDetails]);
 
