@@ -4,7 +4,6 @@ import { refreshToken } from "../auth/AuthenticationAPI";
 import { CsrfTokenData } from "../common/CsrfAPI";
 import { getCookie } from "../../utils/CommonUtils";
 import { getFingerprint } from "../../hooks/useUserDeviceId";
-import { LOGIN_ROUTE } from "../../constant/CommonRoutes";
 
 const axiosInstance = axios.create({
   baseURL: BACKEND_API_URL,
@@ -88,7 +87,7 @@ function getCsrfTokenFromCookie(): CsrfTokenData | null {
 export { axiosInstance };
 
 function handleUnauthorizedRequest() {
-  if (document.location.pathname !== LOGIN_ROUTE) {
-    document.location.href = LOGIN_ROUTE;
-  }
+  // if (document.location.pathname !== LOGIN_ROUTE) {
+  //   document.location.href = LOGIN_ROUTE;
+  // }
 }

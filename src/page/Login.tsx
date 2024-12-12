@@ -7,7 +7,7 @@ import LoginImage from "../assets/LoginImage.jpg";
 
 import { useUserDeviceId } from "../hooks/useUserDeviceId";
 import { AuthenticatonContext } from "../context/AuthenticationContext";
-import { SimpleLoadingScreen } from "../component/SimpleLoading";
+import { SimpleLoading, SimpleLoadingScreen } from "../component/SimpleLoading";
 import { useMutation } from "@tanstack/react-query";
 
 export function LoginPage() {
@@ -149,6 +149,8 @@ export function LoginPage() {
                   </Link>
                   .
                 </p>
+                {isPending && <SimpleLoading />}
+                <div></div>
               </div>
             </form>
           </div>

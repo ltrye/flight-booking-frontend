@@ -4,6 +4,9 @@ import { cancelTicket, Ticket } from "../api/BookingAPI";
 import { getMyTickets } from "../api/UserTicketAPI";
 import { Modal } from "../component/Modal";
 import { bookingStatusCode } from "../constant/AppConstant";
+import { useRedirectIfUnAuthenticated } from "../hooks/useRedirectIfAuthenticated";
+import { useQuery } from "@tanstack/react-query";
+import { SimpleLoadingScreen } from "../component/SimpleLoading";
 
 const statusColor: Record<number, string> = {
   [bookingStatusCode.PENDING]: "text-gray-500",
@@ -17,24 +20,37 @@ function getStatusColor(statusCode: number) {
 }
 
 export function UserDashboardPage() {
+  // const queryClient = useQueryClient();
+  const { isAuthenticated, isLoading: isUserLoading } =
+    useRedirectIfUnAuthenticated();
+
   const [tickets, setTickets] = useState<Ticket[]>([]);
   const [displayTickets, setDisplayTickets] = useState<Ticket[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  async function fetchTickets() {
-    try {
+  const { data, isLoading, isError, isSuccess } = useQuery({
+    queryKey: ["myTickets"],
+    queryFn: async () => {
       const ticketsRes = await getMyTickets();
-      setTickets(ticketsRes);
-      setDisplayTickets(ticketsRes);
-      setIsLoading(false);
-    } catch (e) {
-      console.log(e);
+      return ticketsRes;
+    },
+    enabled: !!isAuthenticated,
+    refetchOnWindowFocus: false,
+    retry: false,
+  });
+
+  useEffect(() => {
+    if (isSuccess) {
+      setTickets(data);
+      setDisplayTickets(data);
+    }
+    if (isError) {
       alert("Failed to fetch tickets");
     }
+  }, [data, isError, isSuccess]);
+
+  if (isLoading || isUserLoading || !isAuthenticated) {
+    return <SimpleLoadingScreen />;
   }
-  useEffect(() => {
-    fetchTickets();
-  }, []);
 
   function filterChangeHandler(event: React.ChangeEvent<HTMLSelectElement>) {
     const filterCode = parseInt(event.target.value);
@@ -66,8 +82,14 @@ export function UserDashboardPage() {
       return;
     }
     alert("Cancel ticket successfully");
-    await fetchTickets();
+    // Refetch tickets after cancellation
+    // queryClient.invalidateQueries({
+    //   queryKey: ["myTickets"],
+
+    // });
+    document.location.reload();
   }
+
   return (
     <>
       <h1 className="text-2xl font-bold my-4 text-center">Dashboard</h1>

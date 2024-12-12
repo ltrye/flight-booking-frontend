@@ -16,7 +16,6 @@ export function SelectPayment({ bookingId }: { bookingId: string }) {
     onSuccess: (data) => {
       document.location.href =
         "/test-payment/" + encodeURIComponent(data.paymentUrl);
-      alert("Payment successful");
     },
   });
 

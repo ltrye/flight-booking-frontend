@@ -9,8 +9,8 @@ export function ProfilePage() {
     useContext(AuthenticatonContext);
 
   useEffect(() => {
-    if (!isLoading && !isAuthenticated) {
-      // document.location.href = "/login";
+    if (!isLoading && isAuthenticated == false) {
+      document.location.href = "/login";
     }
   }, [isAuthenticated, isLoading, userDetails]);
 

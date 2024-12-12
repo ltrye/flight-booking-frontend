@@ -32,7 +32,7 @@ export async function bookFlight(
   }
 
   const json = res.data;
-  console.log(json);
+
   const bookingResponse = json["booking-info"] as BookingResponse;
 
   return bookingResponse;

@@ -10,6 +10,12 @@ export function useAuth() {
   const { data, isLoading, isError, isSuccess } = useQuery({
     queryKey: ["me"],
     queryFn: async () => {
+      if (
+        localStorage.getItem("accessToken") === null ||
+        localStorage.getItem("refreshToken") === null
+      ) {
+        throw new Error("No token found");
+      }
       return await getMe();
     },
     refetchOnWindowFocus: false,
